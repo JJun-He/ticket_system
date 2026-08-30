@@ -1,0 +1,63 @@
+{
+  "name": "ticket_system",
+  "version": "1.0.0",
+  "description": "PostgreSQL 동시성 제어를 적용한 영화 티켓 예매 API",
+  "main": "dist/main.js",
+  "scripts": {
+    "build": "nest build",
+    "lint": "eslint \"src/**/*.ts\"",
+    "format": "prettier --write \"src/**/*.ts\" \"test/**/*.cjs\" \"*.json\" \"*.yaml\" \"*.md\" \"*.mjs\" \".github/**/*.yml\"",
+    "format:check": "prettier --check \"src/**/*.ts\" \"test/**/*.cjs\" \"*.json\" \"*.yaml\" \"*.md\" \"*.mjs\" \".github/**/*.yml\"",
+    "db:up": "docker compose up -d --wait postgres",
+    "db:down": "docker compose down",
+    "db:seed": "docker compose exec -T postgres psql -U ticket_user -d ticket_system < db/seed.sql",
+    "docker:up": "docker compose up -d --build --wait",
+    "docker:down": "docker compose down",
+    "premigration:run": "npm run build",
+    "migration:run": "node --env-file-if-exists=.env ./node_modules/typeorm/cli.js -d dist/database/data-source.js migration:run",
+    "migration:run:prod": "node ./node_modules/typeorm/cli.js -d dist/database/data-source.js migration:run",
+    "premigration:show": "npm run build",
+    "migration:show": "node --env-file-if-exists=.env ./node_modules/typeorm/cli.js -d dist/database/data-source.js migration:show",
+    "premigration:revert": "npm run build",
+    "migration:revert": "node --env-file-if-exists=.env ./node_modules/typeorm/cli.js -d dist/database/data-source.js migration:revert",
+    "pretest:e2e": "npm run build",
+    "start": "nest start",
+    "start:dev": "nest start --watch",
+    "start:prod": "node dist/main.js",
+    "test:db:down": "docker compose -f docker-compose.test.yaml down",
+    "test:db:up": "docker compose -f docker-compose.test.yaml up -d --wait",
+    "test:e2e": "node --test --test-concurrency=1 test/*.e2e.test.cjs"
+  },
+  "engines": {
+    "node": ">=22.9.0"
+  },
+  "dependencies": {
+    "@nestjs/common": "^11.2.3",
+    "@nestjs/config": "^4.0.4",
+    "@nestjs/core": "^11.2.3",
+    "@nestjs/jwt": "^11.0.2",
+    "@nestjs/platform-express": "^11.2.3",
+    "@nestjs/swagger": "^11.4.7",
+    "@nestjs/throttler": "^6.5.0",
+    "@nestjs/typeorm": "^11.0.3",
+    "argon2": "^0.45.1",
+    "class-transformer": "^0.5.1",
+    "class-validator": "^0.15.1",
+    "helmet": "^8.3.0",
+    "pg": "^8.23.0",
+    "reflect-metadata": "^0.2.2",
+    "rxjs": "^7.8.2",
+    "typeorm": "^1.1.0"
+  },
+  "devDependencies": {
+    "@eslint/js": "^10.0.1",
+    "@nestjs/cli": "^11.0.24",
+    "@types/node": "^26.3.0",
+    "eslint": "^10.9.1",
+    "eslint-config-prettier": "^10.1.8",
+    "prettier": "^3.9.6",
+    "typescript": "^6.0.3",
+    "typescript-eslint": "^8.68.0"
+  },
+  "private": true
+}

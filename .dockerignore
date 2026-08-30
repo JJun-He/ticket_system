@@ -1,0 +1,10 @@
+.git
+.github
+.idea
+.env
+dist
+node_modules
+npm-debug.log*
+test
+docker-compose*.yaml
+README.md
